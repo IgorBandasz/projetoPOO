@@ -3,7 +3,6 @@ package model;
 import java.util.Date;
 
 /**
- *
  * @author iband
  */
 public class Usuario {

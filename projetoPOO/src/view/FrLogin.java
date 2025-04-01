@@ -5,6 +5,9 @@
  */
 package view;
 
+import controller.UsuarioController;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author iband
@@ -66,6 +69,11 @@ public class FrLogin extends javax.swing.JFrame {
 
     btnLogar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
     btnLogar.setText("Logar");
+    btnLogar.addMouseListener(new java.awt.event.MouseAdapter() {
+      public void mouseClicked(java.awt.event.MouseEvent evt) {
+        btnLogarMouseClicked(evt);
+      }
+    });
     btnLogar.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         btnLogarActionPerformed(evt);
@@ -80,7 +88,7 @@ public class FrLogin extends javax.swing.JFrame {
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+      .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -98,6 +106,37 @@ public class FrLogin extends javax.swing.JFrame {
     // TODO add your handling code here:
   }//GEN-LAST:event_btnLogarActionPerformed
 
+  private void btnLogarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogarMouseClicked
+    realizarLogin();
+  }//GEN-LAST:event_btnLogarMouseClicked
+
+  private void realizarLogin(){
+    String email = edtEmail.getText();
+    String senha = new String(edtSenha.getPassword());
+    
+    if (email.equals("")) {
+      JOptionPane.showMessageDialog(null,
+              "Campo 'Email' em branco!");
+      return;
+    }
+
+    if (senha.equals("")) {
+      JOptionPane.showMessageDialog(null,
+              "Campo 'Senha' em branco!");
+      return;
+    }
+    
+    UsuarioController controller = new UsuarioController();
+    
+    boolean autenticado = controller.autenticar(email, senha);
+    
+    if(autenticado){
+      JOptionPane.showMessageDialog(null, "Logado com sucesso");
+    } else {
+      JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos");
+    }
+  }
+  
   /**
    * @param args the command line arguments
    */

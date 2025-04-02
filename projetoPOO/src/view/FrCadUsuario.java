@@ -28,17 +28,87 @@ public class FrCadUsuario extends javax.swing.JDialog {
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
 
+    jPanel1 = new javax.swing.JPanel();
+    lblTitulo = new javax.swing.JLabel();
+    lblNome = new javax.swing.JLabel();
+    edtNome = new javax.swing.JTextField();
+    edtEmail = new javax.swing.JTextField();
+    lblEmail = new javax.swing.JLabel();
+    lblSenha = new javax.swing.JLabel();
+    lblConfirmaSenha = new javax.swing.JLabel();
+    lblDataNasc = new javax.swing.JLabel();
+    edtConfirmaSenha = new javax.swing.JPasswordField();
+    edtSenha = new javax.swing.JPasswordField();
+    edtDataNasc = new javax.swing.JFormattedTextField();
+    chkAtivo = new javax.swing.JCheckBox();
+    btnSalvar = new javax.swing.JButton();
+    btnCancelar = new javax.swing.JButton();
+
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+    jPanel1.setBackground(new java.awt.Color(204, 255, 204));
+    jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+    lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+    lblTitulo.setText("Cadastro de Usuário");
+    jPanel1.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(123, 46, -1, -1));
+
+    lblNome.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+    lblNome.setText("Nome");
+    jPanel1.add(lblNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, -1, -1));
+
+    edtNome.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+    jPanel1.add(edtNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 380, -1));
+
+    edtEmail.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+    jPanel1.add(edtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, 380, -1));
+
+    lblEmail.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+    lblEmail.setText("Email");
+    jPanel1.add(lblEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, -1, -1));
+
+    lblSenha.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+    lblSenha.setText("Senha");
+    jPanel1.add(lblSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, -1, -1));
+
+    lblConfirmaSenha.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+    lblConfirmaSenha.setText("Confirma senha");
+    jPanel1.add(lblConfirmaSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 360, -1, -1));
+
+    lblDataNasc.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+    lblDataNasc.setText("Data de Nascimento");
+    jPanel1.add(lblDataNasc, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 430, -1, -1));
+
+    edtConfirmaSenha.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+    jPanel1.add(edtConfirmaSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 390, 260, -1));
+
+    edtSenha.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+    jPanel1.add(edtSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 320, 260, -1));
+
+    edtDataNasc.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+    jPanel1.add(edtDataNasc, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 460, 160, -1));
+
+    chkAtivo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+    chkAtivo.setText("Ativo");
+    jPanel1.add(chkAtivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 450, -1, -1));
+
+    btnSalvar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+    btnSalvar.setText("Salvar");
+    jPanel1.add(btnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 520, 130, -1));
+
+    btnCancelar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+    btnCancelar.setText("Cancelar");
+    jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 520, 130, -1));
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 400, Short.MAX_VALUE)
+      .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 300, Short.MAX_VALUE)
+      .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
     );
 
     pack();
@@ -87,5 +157,20 @@ public class FrCadUsuario extends javax.swing.JDialog {
   }
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
+  private javax.swing.JButton btnCancelar;
+  private javax.swing.JButton btnSalvar;
+  private javax.swing.JCheckBox chkAtivo;
+  private javax.swing.JPasswordField edtConfirmaSenha;
+  private javax.swing.JFormattedTextField edtDataNasc;
+  private javax.swing.JTextField edtEmail;
+  private javax.swing.JTextField edtNome;
+  private javax.swing.JPasswordField edtSenha;
+  private javax.swing.JPanel jPanel1;
+  private javax.swing.JLabel lblConfirmaSenha;
+  private javax.swing.JLabel lblDataNasc;
+  private javax.swing.JLabel lblEmail;
+  private javax.swing.JLabel lblNome;
+  private javax.swing.JLabel lblSenha;
+  private javax.swing.JLabel lblTitulo;
   // End of variables declaration//GEN-END:variables
 }

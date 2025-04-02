@@ -6,7 +6,11 @@
 package view;
 
 import controller.UsuarioController;
+import java.awt.event.KeyEvent;
+import java.net.URL;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import utils.Utils;
 
 /**
  *
@@ -19,6 +23,8 @@ public class FrLogin extends javax.swing.JFrame {
    */
   public FrLogin() {
     initComponents();
+    
+    this.setLocationRelativeTo(null);
   }
 
   /**
@@ -40,6 +46,12 @@ public class FrLogin extends javax.swing.JFrame {
     lblImagem = new javax.swing.JLabel();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+    setTitle("Autenticação");
+    addWindowListener(new java.awt.event.WindowAdapter() {
+      public void windowOpened(java.awt.event.WindowEvent evt) {
+        formWindowOpened(evt);
+      }
+    });
 
     jPanel1.setBackground(new java.awt.Color(153, 255, 255));
     jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -49,14 +61,14 @@ public class FrLogin extends javax.swing.JFrame {
     jPanel1.add(lblAutenticacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 180, -1, -1));
 
     edtEmail.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-    edtEmail.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        edtEmailActionPerformed(evt);
-      }
-    });
     jPanel1.add(edtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(113, 304, 273, -1));
 
     edtSenha.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+    edtSenha.addKeyListener(new java.awt.event.KeyAdapter() {
+      public void keyPressed(java.awt.event.KeyEvent evt) {
+        edtSenhaKeyPressed(evt);
+      }
+    });
     jPanel1.add(edtSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(113, 426, 273, -1));
 
     lblEmail.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -72,11 +84,6 @@ public class FrLogin extends javax.swing.JFrame {
     btnLogar.addMouseListener(new java.awt.event.MouseAdapter() {
       public void mouseClicked(java.awt.event.MouseEvent evt) {
         btnLogarMouseClicked(evt);
-      }
-    });
-    btnLogar.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        btnLogarActionPerformed(evt);
       }
     });
     jPanel1.add(btnLogar, new org.netbeans.lib.awtextra.AbsoluteConstraints(188, 514, 121, -1));
@@ -98,19 +105,28 @@ public class FrLogin extends javax.swing.JFrame {
     pack();
   }// </editor-fold>//GEN-END:initComponents
 
-  private void edtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtEmailActionPerformed
-    // TODO add your handling code here:
-  }//GEN-LAST:event_edtEmailActionPerformed
-
-  private void btnLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogarActionPerformed
-    // TODO add your handling code here:
-  }//GEN-LAST:event_btnLogarActionPerformed
-
   private void btnLogarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogarMouseClicked
     realizarLogin();
   }//GEN-LAST:event_btnLogarMouseClicked
 
-  private void realizarLogin(){
+  private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+    URL caminhoImagem = getClass().getResource("/images/logo_mini.png");
+
+    ImageIcon icon = new ImageIcon(caminhoImagem);
+
+    // Define o ícone da janela
+    this.setIconImage(icon.getImage());
+  }//GEN-LAST:event_formWindowOpened
+
+  private void edtSenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtSenhaKeyPressed
+    //verifico se foi pressionado ENTER
+    if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+      //Se foi teclado ENTER tenta fazer login
+      realizarLogin();
+    }
+  }//GEN-LAST:event_edtSenhaKeyPressed
+
+  private void realizarLogin() {
     String email = edtEmail.getText();
     String senha = new String(edtSenha.getPassword());
     
@@ -126,17 +142,22 @@ public class FrLogin extends javax.swing.JFrame {
       return;
     }
     
+    //Calcular o hash da senha
+    senha = Utils.calcularHash(senha);
+
     UsuarioController controller = new UsuarioController();
-    
+
     boolean autenticado = controller.autenticar(email, senha);
-    
-    if(autenticado){
-      JOptionPane.showMessageDialog(null, "Logado com sucesso");
+
+    if (autenticado) {
+      //Se está autenticado cria a tela de menu
+      FrMenu telaMenu = new FrMenu();
+      telaMenu.setVisible(true);      
     } else {
       JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos");
     }
   }
-  
+
   /**
    * @param args the command line arguments
    */

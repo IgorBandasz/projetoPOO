@@ -80,6 +80,11 @@ public class FrMenu extends javax.swing.JFrame {
     meCadastro.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
     miCadUsuario.setText("Usuário");
+    miCadUsuario.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        miCadUsuarioActionPerformed(evt);
+      }
+    });
     meCadastro.add(miCadUsuario);
 
     jMenuItem2.setText("???");
@@ -156,6 +161,14 @@ public class FrMenu extends javax.swing.JFrame {
   private void miSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSairActionPerformed
     this.dispose();
   }//GEN-LAST:event_miSairActionPerformed
+
+  private void miCadUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miCadUsuarioActionPerformed
+    //crio uma tela de cadastro de usuário
+    FrCadUsuario telaCadastro = new FrCadUsuario(this, rootPaneCheckingEnabled);
+    
+    //Torno a tela visível
+    telaCadastro.setVisible(true);
+  }//GEN-LAST:event_miCadUsuarioActionPerformed
 
   /**
    * @param args the command line arguments

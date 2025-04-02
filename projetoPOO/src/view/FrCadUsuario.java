@@ -5,6 +5,9 @@
  */
 package view;
 
+import java.net.URL;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author iband
@@ -17,6 +20,9 @@ public class FrCadUsuario extends javax.swing.JDialog {
   public FrCadUsuario(java.awt.Frame parent, boolean modal) {
     super(parent, modal);
     initComponents();
+    
+    //tira a referência da posição, abrindo centralizado
+    this.setLocationRelativeTo(null);
   }
 
   /**
@@ -43,15 +49,22 @@ public class FrCadUsuario extends javax.swing.JDialog {
     chkAtivo = new javax.swing.JCheckBox();
     btnSalvar = new javax.swing.JButton();
     btnCancelar = new javax.swing.JButton();
+    jLabel1 = new javax.swing.JLabel();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+    setTitle("Cadastro de Usuário");
+    addWindowListener(new java.awt.event.WindowAdapter() {
+      public void windowOpened(java.awt.event.WindowEvent evt) {
+        formWindowOpened(evt);
+      }
+    });
 
     jPanel1.setBackground(new java.awt.Color(204, 255, 204));
     jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
     lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
     lblTitulo.setText("Cadastro de Usuário");
-    jPanel1.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(123, 46, -1, -1));
+    jPanel1.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, -1, -1));
 
     lblNome.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
     lblNome.setText("Nome");
@@ -85,6 +98,7 @@ public class FrCadUsuario extends javax.swing.JDialog {
     edtSenha.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
     jPanel1.add(edtSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 320, 260, -1));
 
+    edtDataNasc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
     edtDataNasc.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
     jPanel1.add(edtDataNasc, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 460, 160, -1));
 
@@ -93,26 +107,51 @@ public class FrCadUsuario extends javax.swing.JDialog {
     jPanel1.add(chkAtivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 450, -1, -1));
 
     btnSalvar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+    btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/save.png"))); // NOI18N
     btnSalvar.setText("Salvar");
-    jPanel1.add(btnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 520, 130, -1));
+    jPanel1.add(btnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 520, 140, -1));
 
     btnCancelar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+    btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cancel.png"))); // NOI18N
     btnCancelar.setText("Cancelar");
-    jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 520, 130, -1));
+    btnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+      public void mouseClicked(java.awt.event.MouseEvent evt) {
+        btnCancelarMouseClicked(evt);
+      }
+    });
+    jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 520, 140, -1));
+
+    jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user.png"))); // NOI18N
+    jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, -1, -1));
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+      .addGroup(layout.createSequentialGroup()
+        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 505, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(0, 0, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+      .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 573, Short.MAX_VALUE)
     );
 
     pack();
   }// </editor-fold>//GEN-END:initComponents
+
+  private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+    URL caminhoImagem = getClass().getResource("/images/logo_mini.png");
+
+    ImageIcon icon = new ImageIcon(caminhoImagem);
+
+    // Define o ícone da janela
+    this.setIconImage(icon.getImage());
+  }//GEN-LAST:event_formWindowOpened
+
+  private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
+    this.dispose();
+  }//GEN-LAST:event_btnCancelarMouseClicked
 
   /**
    * @param args the command line arguments
@@ -165,6 +204,7 @@ public class FrCadUsuario extends javax.swing.JDialog {
   private javax.swing.JTextField edtEmail;
   private javax.swing.JTextField edtNome;
   private javax.swing.JPasswordField edtSenha;
+  private javax.swing.JLabel jLabel1;
   private javax.swing.JPanel jPanel1;
   private javax.swing.JLabel lblConfirmaSenha;
   private javax.swing.JLabel lblDataNasc;

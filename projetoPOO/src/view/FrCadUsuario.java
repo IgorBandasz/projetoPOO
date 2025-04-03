@@ -7,6 +7,7 @@ package view;
 
 import java.net.URL;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -109,6 +110,11 @@ public class FrCadUsuario extends javax.swing.JDialog {
     btnSalvar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
     btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/save.png"))); // NOI18N
     btnSalvar.setText("Salvar");
+    btnSalvar.addMouseListener(new java.awt.event.MouseAdapter() {
+      public void mouseClicked(java.awt.event.MouseEvent evt) {
+        btnSalvarMouseClicked(evt);
+      }
+    });
     jPanel1.add(btnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 520, 140, -1));
 
     btnCancelar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -153,6 +159,49 @@ public class FrCadUsuario extends javax.swing.JDialog {
     this.dispose();
   }//GEN-LAST:event_btnCancelarMouseClicked
 
+  private void btnSalvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalvarMouseClicked
+    //verificar os campos se estão preenchidos corretamente
+    if(verificarCampos()){
+      //Se estiverem corretos vou gravar
+      //gravar();
+    }
+    //Senão nada acontece
+  }//GEN-LAST:event_btnSalvarMouseClicked
+
+  public boolean verificarCampos(){
+    //Se eu conseguir passar pelas validações retorna true
+    
+    //Nome - não pode ter números ou caracteres especiais, apenas letras e espaço
+    //Email - ter um formato de email a@a.com
+    //Senha - pelo menos 6 dígitos
+    //Data - verificar se está no formato de data dd/mm/aaaa
+        
+    if(edtNome.getText().equals("")){
+      JOptionPane.showMessageDialog(null, "O campo 'Nome' em branco");
+      return false;
+    }
+    
+    if(edtEmail.getText().equals("")){
+      JOptionPane.showMessageDialog(null, "O campo 'Email' em branco");
+      return false;
+    }
+    
+    if(new String(edtSenha.getPassword()).equals("")){
+      JOptionPane.showMessageDialog(null, "O campo 'Senha' em branco");
+      return false;
+    }
+    
+    String lSenha = new String(edtSenha.getPassword());
+    String lConfirmaSenha = new String(edtConfirmaSenha.getPassword());
+    
+    if(! lSenha.equals(lConfirmaSenha)){
+      JOptionPane.showMessageDialog(null, "As senhas não são iguais");
+      return false;
+    }
+    
+    return true;
+  }
+  
   /**
    * @param args the command line arguments
    */

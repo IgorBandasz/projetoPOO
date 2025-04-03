@@ -8,6 +8,7 @@ package view;
 import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import model.Usuario;
 
 /**
  *
@@ -163,11 +164,30 @@ public class FrCadUsuario extends javax.swing.JDialog {
     //verificar os campos se estão preenchidos corretamente
     if(verificarCampos()){
       //Se estiverem corretos vou gravar
-      //gravar();
+      gravar();
     }
     //Senão nada acontece
   }//GEN-LAST:event_btnSalvarMouseClicked
 
+  public void gravar(){
+    //criar uma instância da classe Usuario 
+    //vou preencher os campos
+    Usuario usu = new Usuario();
+    
+    String lSenha = new String(edtSenha.getPassword());
+    String lHashSenha = utils.Utils.calcularHash(lSenha); 
+    
+    Date dataNasc = //conversão de String para Date
+    
+    usu.setNome(edtNome.getText());
+    usu.setEmail(edtEmail.getText());
+    usu.setSenha(lHashSenha); 
+    usu.setAtivo(chkAtivo.isSelected());
+    usu.setDataNasc(dataNasc);
+    
+    //depois passo o objeto para o controller e ele irá gravar no banco de dados
+  }
+  
   public boolean verificarCampos(){
     //Se eu conseguir passar pelas validações retorna true
     
@@ -176,13 +196,15 @@ public class FrCadUsuario extends javax.swing.JDialog {
     //Senha - pelo menos 6 dígitos
     //Data - verificar se está no formato de data dd/mm/aaaa
         
-    if(edtNome.getText().equals("")){
-      JOptionPane.showMessageDialog(null, "O campo 'Nome' em branco");
+    if (!edtNome.getText().matches("^[\\p{L} ]+$")) {//a-
+      JOptionPane.showMessageDialog(null,
+              "O campo 'Nome' possui formato inválido");
       return false;
     }
     
-    if(edtEmail.getText().equals("")){
-      JOptionPane.showMessageDialog(null, "O campo 'Email' em branco");
+    if (!edtEmail.getText().matches("^[a-z0-9._-]+@[a-z0-9._-]+.[a-z._]+$")) {
+      JOptionPane.showMessageDialog(null,
+              "O campo 'Email' possui formato inválido");
       return false;
     }
     
@@ -196,6 +218,18 @@ public class FrCadUsuario extends javax.swing.JDialog {
     
     if(! lSenha.equals(lConfirmaSenha)){
       JOptionPane.showMessageDialog(null, "As senhas não são iguais");
+      return false;
+    }
+    
+    if (lSenha.length() < 6) {
+      JOptionPane.showMessageDialog(null,
+              "O campo 'Senha' deve ter mais de 6 caracteres");
+      return false;
+    }
+    
+    if (edtDataNasc.getText().equals("")) {
+      JOptionPane.showMessageDialog(null,
+              "O campo 'Data de Nascimento' em branco");
       return false;
     }
     

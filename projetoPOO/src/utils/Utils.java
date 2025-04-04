@@ -7,11 +7,16 @@ package utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author iband
  */
+
 public class Utils {
   
   public static String calcularHash(String senha) {
@@ -38,5 +43,23 @@ public class Utils {
     }
 
     return hashSHA1;
+  }
+  
+  public static Date converterStringToDate(String texto) {
+    //Construo o formato que quero transformar o texto
+    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+    
+    //crio minha variável data que será o retorno do método
+    Date data = null;
+
+    try {
+      //tenta converter a String em Date baseado no formato contruido anteriomente
+      data = formato.parse(texto);
+    } catch (ParseException ex) {
+      JOptionPane.showMessageDialog(null,
+              "Erro ao converter a data");
+    }
+    //retorna a data convertida
+    return data;
   }
 }

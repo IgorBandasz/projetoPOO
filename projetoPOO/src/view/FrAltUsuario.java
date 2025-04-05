@@ -6,6 +6,8 @@
 package view;
 
 import controller.UsuarioController;
+import java.awt.Color;
+import javax.swing.JOptionPane;
 import model.Usuario;
 import utils.Utils;
 
@@ -123,9 +125,13 @@ public class FrAltUsuario extends javax.swing.JDialog {
     lblDataNasc.setText("Data de Nascimento");
     jPanel1.add(lblDataNasc, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 480, -1, -1));
 
+    edtConfirmaSenha.setEditable(false);
+    edtConfirmaSenha.setBackground(java.awt.Color.gray);
     edtConfirmaSenha.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
     jPanel1.add(edtConfirmaSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 440, 260, -1));
 
+    edtSenha.setEditable(false);
+    edtSenha.setBackground(java.awt.Color.gray);
     edtSenha.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
     jPanel1.add(edtSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, 260, -1));
 
@@ -182,12 +188,25 @@ public class FrAltUsuario extends javax.swing.JDialog {
   }// </editor-fold>//GEN-END:initComponents
 
   private void btnAlterarSenhaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAlterarSenhaMouseClicked
-    //verificar os campos se estão preenchidos corretamente
-    //if(verificarCampos()){
-      //Se estiverem corretos vou gravar
-   //   gravar();
-   // }
-    //Senão nada acontece
+    if (edtSenha.isEditable() == false) {
+      edtSenha.setEditable(true);
+      edtConfirmaSenha.setEditable(true);
+      edtSenha.setBackground(Color.white);
+      edtConfirmaSenha.setBackground(Color.white);
+      btnAlterarSenha.setText("Cancelar alteração");
+
+      edtSenha.setText("");
+      edtConfirmaSenha.setText("");
+    } else {
+      edtSenha.setEditable(false);
+      edtConfirmaSenha.setEditable(false);
+      edtSenha.setBackground(Color.gray);
+      edtConfirmaSenha.setBackground(Color.gray);
+      btnAlterarSenha.setText("Alterar Senha");
+
+      edtSenha.setText("");
+      edtConfirmaSenha.setText("");
+    }
   }//GEN-LAST:event_btnAlterarSenhaMouseClicked
 
   private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
@@ -195,9 +214,63 @@ public class FrAltUsuario extends javax.swing.JDialog {
   }//GEN-LAST:event_btnCancelarMouseClicked
 
   private void btnSalvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalvarMouseClicked
-    // TODO add your handling code here:
+    if(verificarCampos()){
+      //gravar();
+    }
   }//GEN-LAST:event_btnSalvarMouseClicked
 
+  public boolean verificarCampos() {
+    if (edtNome.getText().equals("")) {
+      JOptionPane.showMessageDialog(null,
+              "O campo 'Nome' em branco");
+      return false;
+    }
+
+    if (!edtNome.getText().matches("^[\\p{L} ]+$")) {
+      JOptionPane.showMessageDialog(null,
+              "O campo 'Nome' possui caracteres inválidos");
+      return false;
+    }
+
+    if (edtEmail.getText().equals("")) {
+      JOptionPane.showMessageDialog(null,
+              "O campo 'Email' em branco");
+      return false;
+    }
+    if (!edtEmail.getText().matches(
+            "^[a-z0-9._-]+@[a-z._]+.[a-z._]+$")) {
+      JOptionPane.showMessageDialog(null,
+              "O campo 'Email' possui formato inválido");
+      return false;
+    }
+
+    if (!edtDataNasc.getText().matches(
+            "^[0-9]{2}/[0-9]{2}/[0-9]{4}$")) {
+      JOptionPane.showMessageDialog(null,
+              "O campo 'Data Nascimento' possui formato inválido."
+              + " Ex: 01/01/2010");
+      return false;
+    }
+
+    if (edtSenha.isEditable()) {
+      String senha = new String(edtSenha.getPassword());
+
+      if (senha.length() < 8) {
+        JOptionPane.showMessageDialog(null,
+                "O campo 'Senha' deve ser maior que 8 caracteres");
+        return false;
+      }
+
+      if (!senha.equals(new String(edtConfirmaSenha.getPassword()))) {
+        JOptionPane.showMessageDialog(null,
+                "As senhas não são iguais");
+        return false;
+      }
+    }
+
+    return true;
+  }
+  
   private void edtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtCodigoActionPerformed
     // TODO add your handling code here:
   }//GEN-LAST:event_edtCodigoActionPerformed

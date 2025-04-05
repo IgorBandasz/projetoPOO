@@ -14,7 +14,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import model.Usuario;
-//import utils.Utils;
+import utils.Utils;
 
 /**
  *
@@ -91,4 +91,81 @@ public class UsuarioController {
     }
     return false;      
   }
+  
+  public boolean alterarUsuario(Usuario u) {
+    String sql = "UPDATE tbusuario SET nome = ?, "
+            + " email = ?, senha = ?, datanasc = ?, "
+            + " ativo = ? WHERE pkusuario = ?";
+
+    GerenciadorConexao gerenciador = new GerenciadorConexao();
+    PreparedStatement comando = null;
+
+    try {
+      comando = gerenciador.prepararComando(sql);
+
+      comando.setString(1, u.getNome());
+      comando.setString(2, u.getEmail());
+      comando.setString(3, u.getSenha());
+      comando.setDate(4, new java.sql.Date(u.getDataNasc().getTime()));
+      comando.setBoolean(5, u.isAtivo());
+      comando.setInt(6, u.getPkUsuario());
+
+      comando.executeUpdate();
+
+      return true;
+    } catch (SQLException ex) {
+      JOptionPane.showMessageDialog(null, "Erro ao atualizar: " + ex);
+    } finally {
+      gerenciador.fecharConexao(comando);
+    }
+    return false;
+  }
+  
+  public Usuario buscarPorPk(int pkUsuario) {
+    //Guarda o sql
+    String sql = "SELECT * FROM tbusuario "
+               + " WHERE PKUSUARIO = ? ";
+
+    //Cria um gerenciador de conexão
+    GerenciadorConexao gerenciador = new GerenciadorConexao();
+    //Cria as variáveis vazias antes do try pois vão ser usadas no finally
+    PreparedStatement comando = null;
+    ResultSet resultado = null;
+
+    //Crio um usuário vazio
+    Usuario usu = new Usuario();
+
+    try {
+      //Preparo do comando sql
+      comando = gerenciador.prepararComando(sql);
+
+      comando.setInt(1, pkUsuario);
+
+      //Executo o comando e guardo o resultado
+      resultado = comando.executeQuery();
+
+      //Irá percorrer os registros do resultado do sql
+      //A cada next() a variavel resultado aponta para o próximo registro 
+      //enquanto next() == true quer dizer que tem registros
+      if (resultado.next()) {
+
+        //Leio as informações da variável resultado e guardo no usuário
+        usu.setPkUsuario(resultado.getInt("pkusuario"));
+        usu.setNome(resultado.getString("nome"));
+        usu.setEmail(resultado.getString("email"));
+        usu.setSenha(resultado.getString("senha"));
+        usu.setDataNasc(resultado.getDate("datanasc"));
+        usu.setAtivo(resultado.getBoolean("ativo"));
+      }
+
+    } catch (SQLException ex) {
+      Logger.getLogger(UsuarioController.class.getName()).log(
+              Level.SEVERE, null, ex);
+    } finally {
+      gerenciador.fecharConexao(comando, resultado);
+    }
+    //retorno o usuário
+    return usu;
+  }
+
 }

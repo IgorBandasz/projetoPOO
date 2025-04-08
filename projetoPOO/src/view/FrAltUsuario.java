@@ -7,6 +7,7 @@ package view;
 
 import controller.UsuarioController;
 import java.awt.Color;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import model.Usuario;
 import utils.Utils;
@@ -84,6 +85,7 @@ public class FrAltUsuario extends javax.swing.JDialog {
     btnSalvar = new javax.swing.JButton();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+    setTitle("Ateração de Usuário");
     getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
     jPanel1.setBackground(new java.awt.Color(255, 255, 204));
@@ -99,11 +101,6 @@ public class FrAltUsuario extends javax.swing.JDialog {
 
     edtCodigo.setEditable(false);
     edtCodigo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-    edtCodigo.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        edtCodigoActionPerformed(evt);
-      }
-    });
     jPanel1.add(edtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, 90, -1));
 
     edtEmail.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -215,7 +212,7 @@ public class FrAltUsuario extends javax.swing.JDialog {
 
   private void btnSalvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalvarMouseClicked
     if(verificarCampos()){
-      //gravar();
+      gravar();
     }
   }//GEN-LAST:event_btnSalvarMouseClicked
 
@@ -271,10 +268,41 @@ public class FrAltUsuario extends javax.swing.JDialog {
     return true;
   }
   
-  private void edtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtCodigoActionPerformed
-    // TODO add your handling code here:
-  }//GEN-LAST:event_edtCodigoActionPerformed
+  public void gravar(){
+    //cria o objeto usuário
+    Usuario usuario = new Usuario();
+    
+    //preenche os dados do usuário
+    usuario.setPkUsuario(pkusuario); //pkusuario é o atributo da classe que veio do menu
+    usuario.setNome(edtNome.getText());
+    usuario.setEmail(edtEmail.getText());
 
+    if (edtSenha.isEditable()) {
+      String senha = new String(edtSenha.getPassword());
+      String senhaHash = Utils.calcularHash(senha);
+      usuario.setSenha(senhaHash);
+    }
+
+    Date data = Utils.converterStringToDate(edtDataNasc.getText());
+    usuario.setDataNasc(data);
+
+    usuario.setAtivo(chkAtivo.isSelected());
+    
+    //Passar o objeto usu para o controller
+    //enviar para o banco de dados
+    UsuarioController controller = new UsuarioController();
+
+    if (controller.alterarUsuario(usuario)) {
+      JOptionPane.showMessageDialog(null,
+              "Usuário: " + usuario.getNome()
+              + " alterado com sucesso!");
+      this.dispose();
+    } else {
+      JOptionPane.showMessageDialog(null,
+              "Usuário não será alterado!");
+    }
+  }
+  
   /**
    * @param args the command line arguments
    */

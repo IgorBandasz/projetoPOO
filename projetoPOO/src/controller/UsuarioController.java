@@ -21,13 +21,13 @@ import utils.Utils;
  * @author iband
  */
 public class UsuarioController {
-  
+
   public boolean autenticar(String email, String senha) {
     //Montar o comando a ser executado
     //os ? são variáveis que são preenchidas mais adiante
     String sql = "SELECT * from TBUSUARIO "
-               + " WHERE email = ? and senha = ? "
-               + " and ativo = true";
+            + " WHERE email = ? and senha = ? "
+            + " and ativo = true";
 
     //Cria uma instância do gerenciador de conexão(conexão com o banco de dados),
     GerenciadorConexao gerenciador = new GerenciadorConexao();
@@ -41,7 +41,7 @@ public class UsuarioController {
 
       //define o valor de cada variável(?) pela posição em que aparece no sql
       comando.setString(1, email);
-      comando.setString(2, senha);      
+      comando.setString(2, senha);
 
       //executa o comando e guarda o resultado da consulta, o resultado é semelhante a uma grade
       resultado = comando.executeQuery();
@@ -54,48 +54,53 @@ public class UsuarioController {
     } catch (SQLException e) {//caso ocorra um erro relacionado ao banco de dados
       JOptionPane.showMessageDialog(null, e.getMessage());//exibe popup com o erro
     } finally {//depois de executar o try, dando erro ou não executa o finally
-      gerenciador.fecharConexao(comando, resultado); 
+      gerenciador.fecharConexao(comando, resultado);
     }
     return false;
   }
-  
-  public boolean inserirUsuario(Usuario usu){
+
+  public boolean inserirUsuario(Usuario usu) {
     //Montar o comando a ser executado
     //os ? são variáveis que são preenchidas mais adiante
     String sql = "INSERT INTO TBUSUARIO(nome, email, senha, datanasc, ativo) "
-               + " VALUES (?,?,?,?,?)";
-    
+            + " VALUES (?,?,?,?,?)";
+
     //Cria uma instância do gerenciador de conexão(conexão com o banco de dados),
     GerenciadorConexao gerenciador = new GerenciadorConexao();
     //Declara as variáveis como nulas antes do try para poder usar no finally
     PreparedStatement comando = null;
-    try{
+    try {
       //prepara o sql, analisando o formato e as váriaveis
       comando = gerenciador.prepararComando(sql);
-      
+
       //define o valor de cada variável(?) pela posição em que aparece no sql
       comando.setString(1, usu.getNome());
       comando.setString(2, usu.getEmail());
       comando.setString(3, usu.getSenha());
       comando.setDate(4, new java.sql.Date(usu.getDataNasc().getTime()));
       comando.setBoolean(5, usu.isAtivo());
-      
+
       //Executa o insert
       comando.executeUpdate();
-      
-      return true;      
-    }catch (SQLException e) {//caso ocorra um erro relacionado ao banco de dados
+
+      return true;
+    } catch (SQLException e) {//caso ocorra um erro relacionado ao banco de dados
       JOptionPane.showMessageDialog(null, e.getMessage());//exibe popup com o erro
     } finally {//depois de executar o try, dando erro ou não executa o finally
-      gerenciador.fecharConexao(comando); 
+      gerenciador.fecharConexao(comando);
     }
-    return false;      
+    return false;
   }
-  
+
   public boolean alterarUsuario(Usuario u) {
     String sql = "UPDATE tbusuario SET nome = ?, "
-            + " email = ?, senha = ?, datanasc = ?, "
-            + " ativo = ? WHERE pkusuario = ?";
+            + " email = ?";
+
+    if (u.getSenha() != null) {
+      sql = sql + " , senha = ? ";
+    }
+
+    sql = sql + " , datanasc = ?, ativo = ? WHERE pkusuario = ?";
 
     GerenciadorConexao gerenciador = new GerenciadorConexao();
     PreparedStatement comando = null;
@@ -105,10 +110,22 @@ public class UsuarioController {
 
       comando.setString(1, u.getNome());
       comando.setString(2, u.getEmail());
-      comando.setString(3, u.getSenha());
-      comando.setDate(4, new java.sql.Date(u.getDataNasc().getTime()));
-      comando.setBoolean(5, u.isAtivo());
-      comando.setInt(6, u.getPkUsuario());
+
+      int numCampo = 3;
+      
+      if (u.getSenha() != null) {
+        comando.setString(numCampo, u.getSenha()); //numCampo = 3
+        numCampo++;
+      }
+      
+      //numCampo = 3 ou 4
+      comando.setDate(numCampo, new java.sql.Date(u.getDataNasc().getTime()));
+      numCampo++;
+      //numCampo = 4 ou 5
+      comando.setBoolean(numCampo, u.isAtivo());
+      numCampo++;
+      //numCampo = 5 ou 6
+      comando.setInt(numCampo, u.getPkUsuario());
 
       comando.executeUpdate();
 
@@ -120,11 +137,11 @@ public class UsuarioController {
     }
     return false;
   }
-  
+
   public Usuario buscarPorPk(int pkUsuario) {
     //Guarda o sql
     String sql = "SELECT * FROM tbusuario "
-               + " WHERE PKUSUARIO = ? ";
+            + " WHERE PKUSUARIO = ? ";
 
     //Cria um gerenciador de conexão
     GerenciadorConexao gerenciador = new GerenciadorConexao();

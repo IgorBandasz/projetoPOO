@@ -71,6 +71,14 @@ public class Usuario {
   public void setAtivo(boolean ativo) {
     this.ativo = ativo;
   }
+
+  public String ativoToString() {
+    if(ativo){
+      return "Ativo";
+    } else {
+      return "Inativo";
+    }
+  }
   
   
 }

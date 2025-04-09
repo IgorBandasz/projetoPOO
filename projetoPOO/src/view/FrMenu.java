@@ -176,7 +176,11 @@ public class FrMenu extends javax.swing.JFrame {
   }// </editor-fold>//GEN-END:initComponents
 
   private void miConUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miConUsuarioActionPerformed
-    // TODO add your handling code here:
+    //crio uma tela de cadastro de usuário
+    FrConUsuario telaConsulta = new FrConUsuario(this, rootPaneCheckingEnabled);
+    
+    //Torno a tela visível
+    telaConsulta.setVisible(true);
   }//GEN-LAST:event_miConUsuarioActionPerformed
 
   private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed

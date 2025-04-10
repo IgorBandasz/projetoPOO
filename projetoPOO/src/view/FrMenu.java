@@ -35,9 +35,6 @@ public class FrMenu extends javax.swing.JFrame {
 
     jPanel1 = new javax.swing.JPanel();
     lblImagem = new javax.swing.JLabel();
-    edtPkusuario = new javax.swing.JTextField();
-    jLabel1 = new javax.swing.JLabel();
-    btnAlterar = new javax.swing.JButton();
     barMenu = new javax.swing.JMenuBar();
     meCadastro = new javax.swing.JMenu();
     miCadUsuario = new javax.swing.JMenuItem();
@@ -60,50 +57,19 @@ public class FrMenu extends javax.swing.JFrame {
 
     lblImagem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo.png"))); // NOI18N
 
-    edtPkusuario.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        edtPkusuarioActionPerformed(evt);
-      }
-    });
-
-    jLabel1.setText("código usuário");
-
-    btnAlterar.setText("alterar");
-    btnAlterar.addMouseListener(new java.awt.event.MouseAdapter() {
-      public void mouseClicked(java.awt.event.MouseEvent evt) {
-        btnAlterarMouseClicked(evt);
-      }
-    });
-
     javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
     jPanel1.setLayout(jPanel1Layout);
     jPanel1Layout.setHorizontalGroup(
       jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(jPanel1Layout.createSequentialGroup()
-        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(jPanel1Layout.createSequentialGroup()
-            .addGap(150, 150, 150)
-            .addComponent(lblImagem))
-          .addGroup(jPanel1Layout.createSequentialGroup()
-            .addGap(52, 52, 52)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(jLabel1)
-              .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(edtPkusuario, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAlterar)))))
+        .addGap(150, 150, 150)
+        .addComponent(lblImagem)
         .addContainerGap(132, Short.MAX_VALUE))
     );
     jPanel1Layout.setVerticalGroup(
       jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(jPanel1Layout.createSequentialGroup()
-        .addGap(36, 36, 36)
-        .addComponent(jLabel1)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(edtPkusuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(btnAlterar))
-        .addGap(40, 40, 40)
+        .addGap(124, 124, 124)
         .addComponent(lblImagem)
         .addContainerGap(92, Short.MAX_VALUE))
     );
@@ -157,6 +123,11 @@ public class FrMenu extends javax.swing.JFrame {
 
     meSobre.setText("Sobre");
     meSobre.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+    meSobre.addMouseListener(new java.awt.event.MouseAdapter() {
+      public void mouseClicked(java.awt.event.MouseEvent evt) {
+        meSobreMouseClicked(evt);
+      }
+    });
     barMenu.add(meSobre);
 
     setJMenuBar(barMenu);
@@ -208,19 +179,11 @@ public class FrMenu extends javax.swing.JFrame {
     telaCadastro.setVisible(true);
   }//GEN-LAST:event_miCadUsuarioActionPerformed
 
-  private void edtPkusuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtPkusuarioActionPerformed
-    // TODO add your handling code here:
-  }//GEN-LAST:event_edtPkusuarioActionPerformed
-
-  private void btnAlterarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAlterarMouseClicked
-    //converter o texto do campo de pkusario para int
-    int pkusuario = Integer.parseInt(edtPkusuario.getText());
+  private void meSobreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_meSobreMouseClicked
+    FrSobre telaSobre  = new FrSobre(this, rootPaneCheckingEnabled);
     
-    //contruo a tela de alteração passando o pk do usuário ao final
-    FrAltUsuario telaAlteracao = new FrAltUsuario(this, rootPaneCheckingEnabled, pkusuario);
-    
-    telaAlteracao.setVisible(true);
-  }//GEN-LAST:event_btnAlterarMouseClicked
+    telaSobre.setVisible(true);
+  }//GEN-LAST:event_meSobreMouseClicked
 
   /**
    * @param args the command line arguments
@@ -259,9 +222,6 @@ public class FrMenu extends javax.swing.JFrame {
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JMenuBar barMenu;
-  private javax.swing.JButton btnAlterar;
-  private javax.swing.JTextField edtPkusuario;
-  private javax.swing.JLabel jLabel1;
   private javax.swing.JMenuItem jMenuItem2;
   private javax.swing.JMenuItem jMenuItem3;
   private javax.swing.JPanel jPanel1;

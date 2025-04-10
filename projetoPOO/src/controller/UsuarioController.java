@@ -235,4 +235,27 @@ public class UsuarioController {
     //retorno a lista de usuários
     return listaUsuarios;
   }
+  
+  public boolean deletar(int pkUsuario) {
+    String sql = "DELETE FROM tbusuario "
+               + "WHERE pkusuario = ?";
+
+    GerenciadorConexao gerenciador = new GerenciadorConexao();
+    PreparedStatement comando = null;
+
+    try {
+      comando = gerenciador.prepararComando(sql);
+      comando.setInt(1, pkUsuario);
+
+      comando.executeUpdate();
+
+      return true;
+    } catch (SQLException ex) {
+      JOptionPane.showMessageDialog(null, "Erro ao excluir: "
+              + ex);
+    } finally {
+      gerenciador.fecharConexao(comando);
+    }
+    return false;
+  }
 }
